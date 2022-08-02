@@ -10,4 +10,5 @@ Following this DB schema:
 
 
 Express Server:
+NEXT STAGE FOR AUG 3RD 2022 CREATE auto Update function and TRIGGER On the database to get a new timestamp on the modified_at columns for users after each PUT
 
