@@ -6,7 +6,7 @@
 
 Following this DB schema:
 
-![image](https://user-images.githubusercontent.com/32515747/182364010-77daeb3c-19c9-4b48-a956-c81d5e3ec28d.png)
+![image](https://user-images.githubusercontent.com/32515747/182545523-274e6173-0581-4c8d-9ff6-3478ec060810.png)
 
 
 ### Triggers and Indexes:
