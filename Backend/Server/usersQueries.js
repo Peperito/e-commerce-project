@@ -1,5 +1,6 @@
 const Pool = require('pg').Pool;
 require('dotenv').config();
+const bcrypt = require("bcrypt");
 
 const pool = new Pool({
   user: process.env.DB_USER,
@@ -29,14 +30,19 @@ const getUserById = (request, response) => {
   })
 };
 
-const createUser = (request, response) => {
-  const { first_name, last_name, email } = request.body
+const  createUser = async (request, response) => {
+  const { username, password, first_name, last_name, email, address, telephone } = request.body;
 
-  pool.query('INSERT INTO users (first_name, last_name, email) VALUES ($1, $2, $3) RETURNING *', [first_name, last_name, email], (error, results) => {
+  const stringPassword = JSON.stringify(password);
+  const salt = await bcrypt.genSalt(10); 
+  const hashedPassword = await bcrypt.hash(stringPassword, salt);
+
+  pool.query('INSERT INTO users (username, password, first_name, last_name, email, address, telephone) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+   [username, hashedPassword, first_name, last_name, email, address, telephone], (error, results) => {
     if (error) {
       throw error
     }
-    response.status(201).send(`User added with ID: ${results.rows[0].id}`)
+    response.status(200).send(`User added with ID: ${results.rows[0].id}`).redirect('/login');
   })
 };
 
@@ -56,5 +62,16 @@ const updateUser = (request, response) => {
   )
 }
 
+const deleteUser = (request, response) => {
+  const id = parseInt(request.params.id)
 
-module.exports = {getUsers, getUserById, createUser, updateUser};
+  pool.query('DELETE FROM users WHERE id = $1', [id], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).send(`User deleted with ID: ${id}`)
+  })
+}
+
+
+module.exports = {getUsers, getUserById, createUser, updateUser, deleteUser};

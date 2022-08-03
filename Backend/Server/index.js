@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const bodyParser = require('body-parser')
-const PORT = process.env.PORT || 3000;
-const db = require('./queries')
+const PORT = process.env.PORT || 3001;
+const dbUsers = require('./usersQueries')
 require('dotenv').config();
+const bcrypt = require("bcrypt");
 
 const app = express();
 
@@ -14,13 +15,15 @@ app.use(
   })
 )
 
-app.get('/users', db.getUsers);
+app.get('/users', dbUsers.getUsers);
 
-app.get('users/:id', db.getUserById);
+app.get('users/:id', dbUsers.getUserById);
 
-app.post('/users', db.createUser);
+app.post('/users', dbUsers.createUser);
 
-app.put('/users/:id', db.updateUser);
+app.put('/users/:id', dbUsers.updateUser);
+
+app.delete('/users/:id', dbUsers.deleteUser);
 
 app.get('/', (request, response) => {
   response.json({ info: 'Node.js, Express, and Postgres API for e-commerce Project' })
