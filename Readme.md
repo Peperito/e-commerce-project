@@ -13,15 +13,19 @@ Following this DB schema:
 Auto Update function and TRIGGER On the database to get a new timestamp on the modified_at columns for users after each PUT
 TO be done:
 - Auto-update modified_at for the rest of the schema
-- 
 
 
 ### Express Server:
 
 - Connection to DB established
 - CRUD functionalities for users
+- Built registration and login with Bcrypt
 
 To be done:
-- build registration, login and sessions
+- Add sessions with Redis
 - Build product endpoints
 
+### React Frontend
+
+To be done: 
+- Everything
