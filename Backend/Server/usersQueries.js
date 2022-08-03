@@ -53,15 +53,13 @@ const  createUser = async (request, response) => {
 
 const loginUser = async (request, response) => {
   const {username, password} = request.body;
-  //const stringPassword = JSON.stringify(password);
 
   pool.query('SELECT * FROM users WHERE username=$1', [username], async (error, results) => {
     if (error) {
      throw error
    }
     const obtainedPassword = results.rows[0].password;
-    console.log(password);
-    console.log(obtainedPassword);
+
     const matchedPassword = await bcrypt.compare(password, obtainedPassword);
  
     if(matchedPassword){
