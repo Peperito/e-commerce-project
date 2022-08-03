@@ -19,32 +19,59 @@ const getUsers = (request, response) => {
     })
 };
 
+
+
 const getUserById = (request, response) => {
   const id = parseInt(request.params.id);
-
-  pool.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
+  
+  pool.query('SELECT username, first_name, last_name, email FROM users WHERE id = $1', [id], (error, results) => {
     if (error) {
       throw error
     }
-    response.status(200).json(results.rows)
+    response.status(200).json(results.rows);
   })
 };
+
+
 
 const  createUser = async (request, response) => {
   const { username, password, first_name, last_name, email, address, telephone } = request.body;
 
   const stringPassword = JSON.stringify(password);
-  const salt = await bcrypt.genSalt(10); 
-  const hashedPassword = await bcrypt.hash(stringPassword, salt);
+  const hashedPassword = await bcrypt.hash(stringPassword, 10);
 
   pool.query('INSERT INTO users (username, password, first_name, last_name, email, address, telephone) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
    [username, hashedPassword, first_name, last_name, email, address, telephone], (error, results) => {
     if (error) {
       throw error
     }
-    response.status(200).send(`User added with ID: ${results.rows[0].id}`).redirect('/login');
+    response.status(200).send(`User added with ID: ${results.rows[0].id}`);
   })
 };
+
+
+
+const loginUser = async (request, response) => {
+  const {username, password} = request.body;
+  //const stringPassword = JSON.stringify(password);
+
+  pool.query('SELECT * FROM users WHERE username=$1', [username], async (error, results) => {
+    if (error) {
+     throw error
+   }
+    const obtainedPassword = results.rows[0].password;
+    console.log(password);
+    console.log(obtainedPassword);
+    const matchedPassword = await bcrypt.compare(password, obtainedPassword);
+ 
+    if(matchedPassword){
+    response.status(201).send(`Success login for user: ${results.rows[0].username}`);
+    }
+    else { response.status(300).send(`Wrong Password`) }
+  })
+};
+
+
 
 const updateUser = (request, response) => {
   const id = parseInt(request.params.id)
@@ -74,4 +101,4 @@ const deleteUser = (request, response) => {
 }
 
 
-module.exports = {getUsers, getUserById, createUser, updateUser, deleteUser};
+module.exports = {getUsers, getUserById, createUser, updateUser, deleteUser, loginUser};

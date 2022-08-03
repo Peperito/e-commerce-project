@@ -17,9 +17,11 @@ app.use(
 
 app.get('/users', dbUsers.getUsers);
 
-app.get('users/:id', dbUsers.getUserById);
+app.get('/users/:id', dbUsers.getUserById);
 
-app.post('/users', dbUsers.createUser);
+app.post('/register', dbUsers.createUser);
+
+app.post('/login', dbUsers.loginUser);
 
 app.put('/users/:id', dbUsers.updateUser);
 
