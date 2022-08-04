@@ -20,7 +20,7 @@ const pool = new Pool({
 });
 
 
-const getUsers = async (request, response) => {
+const getUsers = async (req, res) => {
 
   //Connect to Redis if not already done
   if (!redisClient.isOpen) await redisClient.connect();
@@ -29,7 +29,7 @@ const getUsers = async (request, response) => {
   const users = await redisClient.get('users');
   if (users != null) {
     console.log("cache hit");
-    return response.status(200).json(JSON.parse(users));
+    return res.status(200).json(JSON.parse(users));
   };
 
   // get data fom DB and add to redis for 1hour
@@ -39,27 +39,27 @@ const getUsers = async (request, response) => {
     }
     console.log("cache miss, updating users info into cache")
     redisClient.setEx("users", DEFAULT_EXPIRATION, JSON.stringify(results.rows));
-    response.status(200).json(results.rows); 
+    res.status(200).json(results.rows); 
    });
 };
 
 
 
-const getUserById = (request, response) => {
-  const id = parseInt(request.params.id);
+const getUserById = (req, res) => {
+  const id = parseInt(req.params.id);
   
   pool.query('SELECT username, first_name, last_name, email FROM users WHERE id = $1', [id], (error, results) => {
     if (error) {
       throw error
     }
-    response.status(200).json(results.rows);
+    res.status(200).json(results.rows, { id: req.session.id });
   })
 };
 
 
 
-const  createUser = async (request, response) => {
-  const { username, password, first_name, last_name, email, address, telephone } = request.body;
+const  createUser = async (req, res) => {
+  const { username, password, first_name, last_name, email, address, telephone } = req.body;
 
   const stringPassword = JSON.stringify(password);
   const hashedPassword = await bcrypt.hash(stringPassword, 10);
@@ -69,14 +69,14 @@ const  createUser = async (request, response) => {
     if (error) {
       throw error
     }
-    response.status(200).send(`User added with ID: ${results.rows[0].id}`);
+    res.status(200).send(`User added with ID: ${results.rows[0].id}`);
   })
 };
 
 
 
-const loginUser = async (request, response) => {
-  const {username, password} = request.body;
+const loginUser = async (req, res) => {
+  const {username, password} = req.body;
 
   pool.query('SELECT * FROM users WHERE username=$1', [username], async (error, results) => {
     if (error) {
@@ -85,19 +85,23 @@ const loginUser = async (request, response) => {
     const obtainedPassword = results.rows[0].password;
 
     const matchedPassword = await bcrypt.compare(password, obtainedPassword);
- 
+
     if(matchedPassword){
-    response.status(201).send(`Success login for user: ${results.rows[0].username}`);
+
+      req.session.authenticated = true;
+      req.session.id = results.rows[0].id;
+
+      res.status(200).send(`Success login for user: ${results.rows[0].username}`);
     }
-    else { response.status(300).send(`Wrong Password`) }
+    else { res.status(300).send(`Wrong Password`) }
   })
 };
 
 
 
-const updateUser = (request, response) => {
-  const id = parseInt(request.params.id)
-  const { first_name, last_name, email } = request.body
+const updateUser = (req, res) => {
+  const id = parseInt(req.params.id)
+  const { first_name, last_name, email } = req.body
 
   pool.query(
     'UPDATE users SET first_name = $1, last_name = $2, email = $3 WHERE id = $4',
@@ -106,19 +110,19 @@ const updateUser = (request, response) => {
       if (error) {
         throw error
       }
-      response.status(200).send(`User modified with ID: ${id}`)
+      res.status(200).send(`User modified with ID: ${id}`)
     }
   )
 }
 
-const deleteUser = (request, response) => {
-  const id = parseInt(request.params.id)
+const deleteUser = (req, res) => {
+  const id = parseInt(req.params.id)
 
   pool.query('DELETE FROM users WHERE id = $1', [id], (error, results) => {
     if (error) {
       throw error
     }
-    response.status(200).send(`User deleted with ID: ${id}`)
+    res.status(200).send(`User deleted with ID: ${id}`)
   })
 }
 

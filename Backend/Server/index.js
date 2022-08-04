@@ -9,7 +9,32 @@ const bcrypt = require("bcrypt");
 const helmet = require("helmet"); 
 const cors = require("cors");
 
+const session = require("express-session");
+const store = new session.MemoryStore();
+
 const app = express();
+
+app.use(
+	session({
+		secret: "secret-key", //To be modified when I understand better 
+    cookie: { maxAge: 1000 * 60 *60 * 24, secure: true, sameSite: "none" },
+		resave: false,
+		saveUninitialized: false,
+		store
+	})
+);
+
+function ensureAuthentication(req, res, next) {
+  // Check auth
+  if (req.session.authenticated) {
+    console.log(req.session.authenticated);
+    return next();
+  } else {
+    console.log(req.session.authenticated);
+    res.status(403).json({ msg: "You're not authorized to view this page" });
+  }
+};
+
 
 app.use(bodyParser.json())
 app.use(
@@ -25,7 +50,7 @@ app.use(cors());
 
 app.get('/users', dbUsers.getUsers);
 
-app.get('/users/:id', dbUsers.getUserById);
+app.get('/users/:id', ensureAuthentication, dbUsers.getUserById);
 
 app.post('/register', dbUsers.createUser);
 
