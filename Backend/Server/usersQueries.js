@@ -2,6 +2,15 @@ const Pool = require('pg').Pool;
 require('dotenv').config();
 const bcrypt = require("bcrypt");
 
+const Redis = require("redis");
+const redisClient = Redis.createClient();
+const DEFAULT_EXPIRATION = 3600;
+
+redisClient.on('connect', function(){
+  console.log("Redis Connected!");
+});
+
+
 const pool = new Pool({
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
@@ -10,13 +19,28 @@ const pool = new Pool({
   port: process.env.DB_PORT
 });
 
-const getUsers = (request, response) => {
-    pool.query('SELECT first_name, last_name, created_at, modified_at FROM users ORDER BY id ASC', (error, results) => {
-      if (error) {
-        throw error
-      }
-      response.status(200).json(results.rows)
-    })
+
+const getUsers = async (request, response) => {
+
+  //Connect to Redis if not already done
+  if (!redisClient.isOpen) await redisClient.connect();
+
+  // check if data already in cache
+  const users = await redisClient.get('users');
+  if (users != null) {
+    console.log("cache hit");
+    return response.status(200).json(JSON.parse(users));
+  };
+
+  // get data fom DB and add to redis for 1hour
+  pool.query('SELECT first_name, last_name, created_at, modified_at FROM users ORDER BY id ASC', async (error, results) => {
+    if (error) {
+      throw error
+    }
+    console.log("cache miss, updating users info into cache")
+    redisClient.setEx("users", DEFAULT_EXPIRATION, JSON.stringify(results.rows));
+    response.status(200).json(results.rows); 
+   });
 };
 
 

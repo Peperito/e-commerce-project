@@ -2,9 +2,12 @@ const express = require("express");
 const router = express.Router();
 const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 3001;
-const dbUsers = require('./usersQueries')
+const dbUsers = require('./usersQueries');
 require('dotenv').config();
+
 const bcrypt = require("bcrypt");
+const helmet = require("helmet"); 
+const cors = require("cors");
 
 const app = express();
 
@@ -14,6 +17,11 @@ app.use(
     extended: true,
   })
 )
+
+app.use(helmet());
+app.use(cors());
+
+
 
 app.get('/users', dbUsers.getUsers);
 
