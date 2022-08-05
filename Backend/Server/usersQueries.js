@@ -46,12 +46,18 @@ const getUsers = async (req, res) => {
 const getUserById = (req, res) => {
   const id = parseInt(req.params.id);
   
-  pool.query('SELECT username, first_name, last_name, email FROM users WHERE id = $1', [id], (error, results) => {
-    if (error) {
-      throw error
-    }
-    res.status(200).json(results.rows, { id: req.session.id });
-  })
+  if (req.session.userid == id){
+    pool.query('SELECT username, first_name, last_name, email FROM users WHERE id = $1', [id], (error, results) => {
+      if (error) {
+        throw error
+      }
+      res.status(200).json(results.rows);
+    })
+  }
+  else {
+    res.status(200).send(`You do not have access to this account`);
+  }
+
 };
 
 
@@ -87,7 +93,7 @@ const loginUser = async (req, res) => {
     if(matchedPassword){
 
       req.session.authenticated = true;
-      req.session.username = results.rows[0].username;
+      req.session.userid = results.rows[0].id;
 
       res.status(200).send(`Success login for user: ${results.rows[0].username}`);
   

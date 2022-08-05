@@ -17,10 +17,10 @@ const app = express();
 app.use(
 	session({
 		secret: "secret-key", //To be modified when I understand better 
-    cookie: { maxAge: 1000 * 60 *60 * 24, secure: true, sameSite: false, httpOnly: true },
-		resave: false,
+    cookie: { maxAge: 1000 * 60 * 5 },
 		saveUninitialized: false,
-		store: store
+		store: store,
+    resave: false,
 	})
 );
 
@@ -65,10 +65,9 @@ app.put('/users/:id', dbUsers.updateUser);
 
 app.delete('/users/:id', dbUsers.deleteUser);
 
-app.get('/', (request, response) => {
-  response.json({ info: 'Node.js, Express, and Postgres API for e-commerce Project' })
-})
-
+app.get('/', (req, res) => {
+  res.json({ info: 'Node.js, Express, and Postgres API for e-commerce Project' })
+});
 
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`)
