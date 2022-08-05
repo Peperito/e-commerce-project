@@ -17,20 +17,25 @@ const app = express();
 app.use(
 	session({
 		secret: "secret-key", //To be modified when I understand better 
-    cookie: { maxAge: 1000 * 60 *60 * 24, secure: true, sameSite: "none" },
+    cookie: { maxAge: 1000 * 60 *60 * 24, secure: true, sameSite: false, httpOnly: true },
 		resave: false,
 		saveUninitialized: false,
-		store
+		store: store
 	})
+);
+
+app.use(
+  cors({
+    origin: "http://localhost:3000", 
+    methods: "*"
+  })
 );
 
 function ensureAuthentication(req, res, next) {
   // Check auth
   if (req.session.authenticated) {
-    console.log(req.session.authenticated);
     return next();
   } else {
-    console.log(req.session.authenticated);
     res.status(403).json({ msg: "You're not authorized to view this page" });
   }
 };

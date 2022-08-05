@@ -28,7 +28,6 @@ const getUsers = async (req, res) => {
   // check if data already in cache
   const users = await redisClient.get('users');
   if (users != null) {
-    console.log("cache hit");
     return res.status(200).json(JSON.parse(users));
   };
 
@@ -37,7 +36,6 @@ const getUsers = async (req, res) => {
     if (error) {
       throw error
     }
-    console.log("cache miss, updating users info into cache")
     redisClient.setEx("users", DEFAULT_EXPIRATION, JSON.stringify(results.rows));
     res.status(200).json(results.rows); 
    });
@@ -89,9 +87,10 @@ const loginUser = async (req, res) => {
     if(matchedPassword){
 
       req.session.authenticated = true;
-      req.session.id = results.rows[0].id;
+      req.session.username = results.rows[0].username;
 
       res.status(200).send(`Success login for user: ${results.rows[0].username}`);
+  
     }
     else { res.status(300).send(`Wrong Password`) }
   })

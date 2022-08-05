@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { login } from "../api/users";
 
 
@@ -47,7 +47,8 @@ export const Login = () => {
             <div class="flex items-center justify-between">
             <button class="bg-slate-700 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
             type="button"
-            onClick={login(formState.username, formState.password)}>
+            onClick={() => login(formState.username, formState.password)}
+            >
              Sign In
             </button>
             <a class="inline-block align-baseline font-bold text-sm text-slate-700 hover:text-slate-800" href="#">

@@ -18,15 +18,15 @@ export const login = async (username, password) => {
   const response = await fetch(`${API_ENDPOINT}/login`, {
     method: "POST",
     body: JSON.stringify({
-      username: username,
-      password: password
+      "username": username,
+      "password": password
     }),
     headers: {
       "Content-Type": "application/json",
     },
   });
 
-  const isLogged = await response.json();
+  const isLogged = await response.text();
 
-  return isLogged;
+  return window.alert(isLogged);
 };
