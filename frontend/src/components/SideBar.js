@@ -1,17 +1,26 @@
 import { BsPersonCircle } from "react-icons/bs";
+import { getUserId } from "../api/users";
 import React from "react";
+import { Link } from "react-router-dom";
 
 
 const SideBar = () => {
+
+    const loginOrProfile = () => {
+        const isLogged = document.cookie
+    }
+
     return (
     <div className="fixed top-0 left-0 h-screen w-32 flex flex-col bg-slate-800 text-white shadow-lg">
-        <SideBarIcon icon={ < BsPersonCircle size="60" />} tooltipText="Access your account here" />
+        <Link to="/profile"><SideBarIcon icon={ < BsPersonCircle size="60" />} tooltipText="Access your account here" /></Link>
     </div>
     )
 }
 
-const SideBarIcon = ({ icon, text = 'tooltip 💡', tooltipText = '', invisiLink}) => (
-    <div className = "sidebar-icon group">
+const SideBarIcon = ({ icon, text = 'tooltip 💡', tooltipText = '', invisiLink}) => {
+
+    return (
+    <div className = "sidebar-icon group" >
         {icon}
         <span className="sidebar-invisiLink group-hover:scale-100 peer">
             {invisiLink}
@@ -23,6 +32,6 @@ const SideBarIcon = ({ icon, text = 'tooltip 💡', tooltipText = '', invisiLink
             {tooltipText}
         </span>
     </div>
-);
+)};
 
 export default SideBar;

@@ -5,8 +5,6 @@ const PORT = process.env.PORT || 3001;
 const dbUsers = require('./usersQueries');
 require('dotenv').config();
 
-const bcrypt = require("bcrypt");
-const helmet = require("helmet"); 
 const cors = require("cors");
 
 const session = require("express-session");
@@ -14,10 +12,13 @@ const store = new session.MemoryStore();
 
 const app = express();
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(
 	session({
 		secret: "secret-key", //To be modified when I understand better 
-    cookie: { maxAge: 1000 * 60 * 5 },
+    cookie: { maxAge: 1000 * 60 * 5, id: '', secure: true, sameSite:"none"},
 		saveUninitialized: false,
 		store: store,
     resave: false,
@@ -26,10 +27,12 @@ app.use(
 
 app.use(
   cors({
-    origin: "http://localhost:3000", 
-    methods: "*"
+    origin: ['https://localhost:3000'],
+    methods: ["POST", "PUT", "GET", "DELETE", "HEAD", "OPTIONS"],
+    credentials: true
   })
 );
+
 
 function ensureAuthentication(req, res, next) {
   // Check auth
@@ -48,10 +51,6 @@ app.use(
   })
 )
 
-app.use(helmet());
-app.use(cors());
-
-
 
 app.get('/users', dbUsers.getUsers);
 
@@ -65,12 +64,17 @@ app.put('/users/:id', dbUsers.updateUser);
 
 app.delete('/users/:id', dbUsers.deleteUser);
 
+app.get("/logout", (req, res) => {
+	req.logout();
+	res.redirect("/");
+});
+
 app.get('/', (req, res) => {
   res.json({ info: 'Node.js, Express, and Postgres API for e-commerce Project' })
 });
 
 app.listen(PORT, () => {
-    console.log(`App listening on port ${PORT}`)
-  });
+  console.log(`App listening on port ${PORT}`)
+});
 
 module.exports = router;

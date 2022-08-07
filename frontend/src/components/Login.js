@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { login } from "../api/users";
+import SideBar from "./SideBar";
+import { Navigate } from "react-router-dom";
 
 
 export const Login = () => {
@@ -14,10 +16,12 @@ export const Login = () => {
 	}));
  };
 
-
+ 
  return (
+    <div>
+    <SideBar/>
     <div class="md:flex md:w-screen md:items-center md:justify-center mb-6">
-        <form class="bg-white shadow-md rounded px-8 pt-6 pb-8">
+        <form class="bg-white shadow-md rounded px-8 pt-6 pb-8" >
             <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
             Username
@@ -56,6 +60,7 @@ export const Login = () => {
             </a>
             </div>
         </form>
+    </div>
     </div>
  );
 }

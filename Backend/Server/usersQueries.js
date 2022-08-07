@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const Redis = require("redis");
 const redisClient = Redis.createClient();
 const DEFAULT_EXPIRATION = 3600;
+const router = require("express").Router();
 
 redisClient.on('connect', function(){
   console.log("Redis Connected!");
@@ -51,10 +52,11 @@ const getUserById = (req, res) => {
       if (error) {
         throw error
       }
-      res.status(200).json(results.rows);
+      res.status(200).json(results.rows[0]);
     })
   }
   else {
+    console.log(req.session.cookie.id);
     res.status(200).send(`You do not have access to this account`);
   }
 
@@ -95,7 +97,8 @@ const loginUser = async (req, res) => {
       req.session.authenticated = true;
       req.session.userid = results.rows[0].id;
 
-      res.status(200).send(`Success login for user: ${results.rows[0].username}`);
+      res.status(200).redirect(`/users/${results.rows[0].id}`);
+      
   
     }
     else { res.status(300).send(`Wrong Password`) }
