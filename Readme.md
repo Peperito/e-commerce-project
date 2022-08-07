@@ -22,7 +22,7 @@ TO be done:
 - Built registration and login with Bcrypt
 
 To be done:
-- Add sessions with Redis
+- Fix Cookies on browser, build better authentication (passport?)
 - Build product endpoints
 
 ### React Frontend
