@@ -12,13 +12,12 @@ const store = new session.MemoryStore();
 
 const app = express();
 
-app.use(passport.initialize());
-app.use(passport.session());
+app.set('trust proxy', 1);
 
 app.use(
 	session({
 		secret: "secret-key", //To be modified when I understand better 
-    cookie: { maxAge: 1000 * 60 * 5, id: '', secure: true, sameSite:"none"},
+    cookie: { maxAge: 1000 * 60 * 5, id: '', secure: false, sameSite:"none"},
 		saveUninitialized: false,
 		store: store,
     resave: false,
