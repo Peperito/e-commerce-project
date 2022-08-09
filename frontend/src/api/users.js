@@ -1,5 +1,11 @@
 import { API_ENDPOINT } from ".";
 import { Navigate } from 'react-router-dom';
+import axios from "axios";
+
+export default axios.create({
+  baseURL: "https://localhost:3001",
+  withCredentials: true
+});
 
 export const getUsers = async () => {
   const response = await fetch(`${API_ENDPOINT}/users`);
@@ -10,31 +16,33 @@ export const getUsers = async () => {
 
 
 export const getUserById = async () => {
+  try {
+    const response = await axios.get(`${API_ENDPOINT}/users/11`, 
+    {
+      withCredentials: true,
+      mode: 'cors'
+    });
 
-  const id=11
-  const response = await fetch(`${API_ENDPOINT}/users/${id}`);
+    window.alert(response.data);
 
-  const user = await response.text();
-  return user;
-};
+  } catch (error) {
+    console.error(error);
+  }
+}
 
+export const login = async(username, password) => {
 
-export const login = async (username, password) => {
-
-  const response = await fetch(`${API_ENDPOINT}/login`, {
-    method: "POST",
-    credentials: "include",
-    body: JSON.stringify({
+  const response = await axios.post(
+    `${API_ENDPOINT}/login`,
+    JSON.stringify({ 
       "username": username,
       "password": password
     }),
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Credentials": true
-    },
-  });
+    {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+      mode: 'cors'
+    });
 
-  const isLogged = await response.text();
-  
-  return window.alert(isLogged);
-};
+    return window.alert(response.data);
+}

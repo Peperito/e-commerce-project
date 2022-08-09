@@ -52,12 +52,11 @@ const getUserById = (req, res) => {
       if (error) {
         throw error
       }
-      res.status(200).json(results.rows[0]);
+      res.status(200).send(results.rows[0]);
     })
   }
   else {
-    console.log(req.session.cookie.id);
-    res.status(200).send(`You do not have access to this account`);
+    res.status(300).send("You do not have access to this account");
   }
 
 };
@@ -75,7 +74,7 @@ const  createUser = async (req, res) => {
     if (error) {
       throw error
     }
-    res.status(200).redirect(`/users/${results.rows[0].id}`);
+    res.status(200).redirect("/login");
   })
 };
 
@@ -97,8 +96,7 @@ const loginUser = async (req, res) => {
       req.session.authenticated = true;
       req.session.userid = results.rows[0].id;
 
-      res.status(200).redirect(`/users/${results.rows[0].id}`);
-      
+      res.status(200).send('Login Successful');
   
     }
     else { res.status(300).send(`Wrong Password`) }
