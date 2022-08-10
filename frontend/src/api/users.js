@@ -1,5 +1,4 @@
 import { API_ENDPOINT } from ".";
-import { Navigate } from 'react-router-dom';
 import axios from "axios";
 
 export default axios.create({
@@ -15,23 +14,9 @@ export const getUsers = async () => {
 };
 
 
-export const getUserById = async () => {
-  try {
-    const response = await axios.get(`${API_ENDPOINT}/users/11`, 
-    {
-      withCredentials: true,
-      mode: 'cors'
-    });
-
-    window.alert(response.data);
-
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 export const login = async(username, password) => {
 
+  try {
   const response = await axios.post(
     `${API_ENDPOINT}/login`,
     JSON.stringify({ 
@@ -44,5 +29,35 @@ export const login = async(username, password) => {
       mode: 'cors'
     });
 
-    return window.alert(response.data);
+    const data = JSON.stringify(response.data);
+    const parsedData = JSON.parse(data);
+
+    localStorage.setItem('userid', parsedData.userid);
+    window.location.replace("https://localhost:3000");
+    return window.alert("Login Sucessfull");
+  }
+  catch (error) {
+    window.alert("Wrong Password");
+  }
+
+}
+
+export const logout = async() => {
+
+   try {
+    const response = await axios.delete(`${API_ENDPOINT}/logout`, 
+    {
+      withCredentials: true,
+      mode: 'cors'
+    });
+
+    localStorage.clear();
+    const data = JSON.stringify(response.data);
+    window.location.replace("https://localhost:3000");
+    return window.alert(data);
+
+  } catch (error) {
+    window.alert(error);
+  }
+
 }

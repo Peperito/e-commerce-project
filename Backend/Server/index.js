@@ -33,7 +33,7 @@ app.set('trust proxy', 1);
 app.use(
 	session({
 		secret: "sessiontest", //To be modified when I understand better 
-    cookie: { maxAge: 1000 * 60 * 60, secure: true, sameSite:"lax"},
+    cookie: { maxAge: 1000 * 60 * 60 * 24, secure: true, sameSite:"lax"},
 		saveUninitialized: false,
 		store: store,
     resave: false,
@@ -52,10 +52,8 @@ app.use(
 function ensureAuthentication(req, res, next) {
   // Check auth
   if (req.session.authenticated) {
-    console.log("passed Authentication")
     return next();
   } else {
-    console.log("failed authentication");
     res.status(403).json({ msg: "You're not authorized to view this page" });
   }
 };
@@ -77,9 +75,9 @@ app.post('/register', dbUsers.createUser);
 
 app.post('/login', dbUsers.loginUser);
 
-app.put('/users/:id', dbUsers.updateUser);
+app.put('/users/:id', ensureAuthentication, dbUsers.updateUser);
 
-app.delete('/users/:id', dbUsers.deleteUser);
+app.delete('/users/:id', ensureAuthentication, dbUsers.deleteUser);
 
 app.get("/logout", (req, res) => {
 	req.logout();
@@ -88,6 +86,19 @@ app.get("/logout", (req, res) => {
 
 app.get('/', (req, res) => {
   res.json({ info: 'Node.js, Express, and Postgres API for e-commerce Project' })
+});
+
+app.delete('/logout', (req, res) => {
+  if (req.session) {
+    req.session.destroy(err => {
+      if (err) {
+        res.status(400).send('Unable to log out')
+      } else {
+        console.log("session destroyed")
+        res.send('Logout successful')
+      }
+    });
+  } 
 });
 
 module.exports = router;

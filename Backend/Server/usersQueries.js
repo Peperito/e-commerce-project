@@ -52,11 +52,11 @@ const getUserById = (req, res) => {
       if (error) {
         throw error
       }
-      res.status(200).send(results.rows[0]);
+      res.status(200).json(results.rows[0]);
     })
   }
   else {
-    res.status(300).send("You do not have access to this account");
+    res.status(301).send("You do not have access to this account");
   }
 
 };
@@ -96,7 +96,8 @@ const loginUser = async (req, res) => {
       req.session.authenticated = true;
       req.session.userid = results.rows[0].id;
 
-      res.status(200).send('Login Successful');
+      console.log("Session created")
+      res.status(200).send({userid: req.session.userid});
   
     }
     else { res.status(300).send(`Wrong Password`) }
