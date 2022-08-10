@@ -54,7 +54,7 @@ export const logout = async() => {
     localStorage.clear();
     const data = JSON.stringify(response.data);
     window.location.replace("https://localhost:3000");
-    return window.alert(data);
+    return data;
 
   } catch (error) {
     window.alert(error);

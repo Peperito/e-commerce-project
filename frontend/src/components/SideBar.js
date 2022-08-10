@@ -1,4 +1,6 @@
 import { BsPersonCircle, BsBoxArrowRight } from "react-icons/bs";
+import { FaCarAlt, FaPlane } from "react-icons/fa";
+import { GiSailboat } from "react-icons/gi";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { logout } from "../api/users";
@@ -27,8 +29,11 @@ const SideBar = () => {
 
     return (
     <div className="fixed top-0 left-0 h-screen w-32 flex flex-col bg-slate-800 text-white shadow-lg">
-        <Link to={value}><SideBarIcon icon={ < BsPersonCircle size="60" />} tooltipText="Access your account here" /></Link>
-        <div onClick={handleLogout} ><SideBarIcon icon={ < BsBoxArrowRight size="60" />} tooltipText="Exit your account here" /></div>
+        <Link to={value}><SideBarIcon icon={ < BsPersonCircle size="44" />} tooltipText="Access your account here" /></Link>
+        <SideBarIcon icon={ < FaCarAlt size="44" />} tooltipText="Check out our cars" />
+        <SideBarIcon icon={ < GiSailboat size="44" />} tooltipText="Check out our Boats" />
+        <SideBarIcon icon={ < FaPlane size="44" />} tooltipText="Check out our Planes" />
+        <div onClick={handleLogout} ><SideBarIcon icon={ < BsBoxArrowRight size="44" />} tooltipText="Exit your account here" /></div>
     </div>
     )
 }

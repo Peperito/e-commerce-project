@@ -1,10 +1,10 @@
 import './App.css';
-import SideBar from './components/SideBar';
+import WelcomePage from './routes/WelcomePage';
 
 function App() {
   return (
-    <div className="flex">
-    <SideBar />
+    <div>
+      <WelcomePage />
   </div>
   );
 }

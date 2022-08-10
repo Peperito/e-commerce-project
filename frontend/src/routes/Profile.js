@@ -1,4 +1,5 @@
 import SideBar from "../components/SideBar";
+import LogoBar from "../components/LogoBar";
 import React, { useState, useEffect } from "react";
 import { API_ENDPOINT } from "../api/index";
 import axios from "axios";
@@ -40,9 +41,10 @@ export default function Profile() {
     return (
     <main>
       <SideBar />
+      <LogoBar />
       <div>
         <div className="text-center font-bold">
-            <h2 className="pt-12">Username: {username}</h2>
+            <h2 className="pt-36">Username: {username}</h2>
             <h2 className="pt-12">first name: {firstName}</h2>
             <h2 className="pt-12" >last Name: {lastName}</h2>
             <h2 className="pt-12" >email: {email}</h2>

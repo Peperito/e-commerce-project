@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import Profile from "./routes/Profile";
 import Login from './components/Login';
+import Register from './components/Register';
 import reportWebVitals from './reportWebVitals';
 import {
   BrowserRouter,
@@ -19,6 +20,7 @@ root.render(
       <Route path="/" element={<App />} />
       <Route path="profile" element={<Profile />} />
       <Route path="login" element={<Login />} />
+      <Route path="register" element={<Register />} />
     </Routes>
     </BrowserRouter>
   </React.StrictMode>
