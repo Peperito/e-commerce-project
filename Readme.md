@@ -29,6 +29,11 @@ To be done:
 
 Done: Welcome Page, Login/LogOut
 
+This is the current homepage:
+
+![image](https://user-images.githubusercontent.com/32515747/184133967-99adbdbb-7020-4d52-8f9e-50d175586dfc.png)
+
+
 To continue: Profile Page, Account Creation
 
 To be done: 
