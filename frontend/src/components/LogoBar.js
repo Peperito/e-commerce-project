@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { BsQuestionCircle } from "react-icons/bs";
+import { BsCart} from "react-icons/bs";
 
 const LogoBar = () => {
 
@@ -8,7 +8,7 @@ const LogoBar = () => {
         <div className ="fixed top-0  h-24 w-screen bg-slate-800 text-orange-300 shadow-lg z-20">
             <Link to="/"><h1 className="z-40 font-oswald text-center pt-6 text-4xl drop-shadow-lg"> Shopifast </h1></Link>
             <CreateOrDisplay />
-            <LogoBarIcon icon={ < BsQuestionCircle size="44" />} />
+            <LogoBarIcon icon={ < BsCart size="44" />} />
         </div>
     )
 }

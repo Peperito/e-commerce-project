@@ -9,6 +9,11 @@ module.exports = {
         oswald: ['Oswald', 'sans-serif'],
       }
     },
-  },
+    extend: {
+      backgroundImage: theme => ({
+        'hero-pattern': "url('./img/background.jpg')",
+      })
+    },
   plugins: [],
+}
 }

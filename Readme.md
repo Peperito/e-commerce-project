@@ -27,7 +27,10 @@ To be done:
 
 ### React Frontend
 
-**FIX LOGIN**
+Done: Welcome Page, Login/LogOut
+
+To continue: Profile Page, Account Creation
 
 To be done: 
-- Everything
+- Create Product pages
+- Create Cart
