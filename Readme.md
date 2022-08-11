@@ -8,6 +8,11 @@ Following this DB schema:
 
 ![image](https://user-images.githubusercontent.com/32515747/182545523-274e6173-0581-4c8d-9ff6-3478ec060810.png)
 
+### Redis database 
+
+The goal of this project is also to implement the concepts I am currently learning on Redis University
+In order to have the products load as fast as possible, Redis will capture and store all the research results from the user.
+
 
 ### Triggers and Indexes:
 Auto Update function and TRIGGER On the database to get a new timestamp on the modified_at columns for users after each PUT
@@ -19,10 +24,10 @@ TO be done:
 
 - Connection to DB established
 - CRUD functionalities for users
-- Built registration and login with Bcrypt
+- Took care of the sessions and cookies with express sessions
+- Built registration / login / logout with Bcrypt
 
 To be done:
-- Fix Cookies on browser, build better authentication (passport?)
 - Build product endpoints
 
 ### React Frontend
@@ -37,5 +42,6 @@ This is the current homepage:
 To continue: Profile Page, Account Creation
 
 To be done: 
-- Create Product pages
+- Create Product search pages
+- Create individual Product pages
 - Create Cart
