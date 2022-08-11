@@ -97,7 +97,7 @@ const loginUser = async (req, res) => {
       req.session.userid = results.rows[0].id;
 
       console.log("Session created")
-      res.status(200).send({userid: req.session.userid});
+      res.status(200).send({username: results.rows[0].username, userid: req.session.userid});
   
     }
     else { res.status(300).send(`Wrong Password`) }

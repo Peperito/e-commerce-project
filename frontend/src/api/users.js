@@ -33,6 +33,8 @@ export const login = async(username, password) => {
     const parsedData = JSON.parse(data);
 
     localStorage.setItem('userid', parsedData.userid);
+    localStorage.setItem('username', parsedData.username);
+    
     window.location.replace("https://localhost:3000");
     return window.alert("Login Sucessfull");
   }

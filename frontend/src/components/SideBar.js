@@ -28,31 +28,39 @@ const SideBar = () => {
 
 
     return (
-    <div className="fixed top-0 left-0 h-screen w-32 flex flex-col bg-slate-800 text-white shadow-lg">
-        <Link to={value}><SideBarIcon icon={ < BsPersonCircle size="44" />} tooltipText="Access your account here" /></Link>
-        <SideBarIcon icon={ < FaCarAlt size="44" />} tooltipText="Check out our cars" />
-        <SideBarIcon icon={ < GiSailboat size="44" />} tooltipText="Check out our Boats" />
-        <SideBarIcon icon={ < FaPlane size="44" />} tooltipText="Check out our Planes" />
-        <div onClick={handleLogout} ><SideBarIcon icon={ < BsBoxArrowRight size="44" />} tooltipText="Exit your account here" /></div>
+    <div className="fixed top-0 left-0 h-screen w-28 bg-slate-800 shadow-lg overflow-y-auto z-10">
+        <Link to={value}><SideBarIconProfile icon={ < BsPersonCircle size="44" />} tooltipText="Access your account here" /></Link>
+        <SideBarIcon icon={ < FaCarAlt size="44" />} />
+        <SideBarIcon icon={ < GiSailboat size="44" />} />
+        <SideBarIcon icon={ < FaPlane size="44" />} />
+        <div onClick={handleLogout} ><SideBarIconBottom  icon={ < BsBoxArrowRight size="44" />} tooltipText="Exit your account here" /></div>
     </div>
     )
 }
 
-const SideBarIcon = ({ icon, text = 'tooltip 💡', tooltipText = '', invisiLink}) => {
+const SideBarIcon = ({ icon }) => {
 
     return (
     <div className = "sidebar-icon group" >
         {icon}
-        <span className="sidebar-invisiLink group-hover:scale-100 peer">
-            {invisiLink}
-        </span>
-        <span className="sidebar-tooltip group-hover:scale-100 peer">
-            {text}
-        </span>
-        <span className="sidebar-tooltipText peer-hover:scale-100 hover:scale-100">
-            {tooltipText}
-        </span>
     </div>
 )};
+
+const SideBarIconBottom = ({ icon }) => {
+
+    return (
+    <div className="sidebar-logout group" >
+        {icon}
+    </div>
+)};
+
+const SideBarIconProfile= ({ icon }) => {
+
+    return (
+    <div className="sidebar-profile group" >
+        {icon}
+    </div>
+)};
+
 
 export default SideBar;

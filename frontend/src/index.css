@@ -6,13 +6,33 @@
 @layer components {
 	.sidebar-icon{
 		@apply relative flex items-center justify-center
-		h-16 w-16 mb-2 mx-auto top-32 mt-4
+		h-16 w-16 mb-4 mx-auto mt-4
     bg-gray-700 text-amber-600
     hover:bg-amber-800
     rounded-2xl hover:rounded-xl
     transition-all duration-100 ease-linear
     cursor-pointer;
 	}
+
+  .sidebar-logout{
+    @apply relative flex items-center justify-center
+		h-16 w-16 mb-2 mx-auto mt-8 top-36
+    bg-gray-700 text-amber-600
+    hover:bg-amber-800
+    rounded-2xl hover:rounded-xl
+    transition-all duration-100 ease-linear
+    cursor-pointer;
+  }
+
+  .sidebar-profile{
+    @apply relative flex items-center justify-center
+		h-16 w-16 mx-auto mt-36 mb-36
+    bg-gray-700 text-amber-600
+    hover:bg-amber-800
+    rounded-2xl hover:rounded-xl
+    transition-all duration-100 ease-linear
+    cursor-pointer;
+  }
 
   .sidebar-tooltip{
     @apply absolute w-auto p-2 m-2 min-w-max left-24
@@ -38,4 +58,14 @@
     scale-0
     opacity-0;
   }
+
+  .logo-bar-icon{
+		@apply absolute flex items-center justify-center
+		h-16 w-16 mx-auto top-4 right-4
+    bg-gray-700 text-amber-600
+    hover:bg-amber-800
+    rounded-2xl hover:rounded-xl
+    transition-all duration-100 ease-linear
+    cursor-pointer;
+	}
 }
