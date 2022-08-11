@@ -48,7 +48,7 @@ const getUserById = (req, res) => {
   const id = parseInt(req.params.id);
   
   if (req.session.userid == id){
-    pool.query('SELECT username, first_name, last_name, email FROM users WHERE id = $1', [id], (error, results) => {
+    pool.query('SELECT username, first_name, last_name, email, telephone, address FROM users WHERE id = $1', [id], (error, results) => {
       if (error) {
         throw error
       }
@@ -64,17 +64,17 @@ const getUserById = (req, res) => {
 
 
 const  createUser = async (req, res) => {
-  const { username, password, first_name, last_name, email, address, telephone } = req.body;
+  const { username, password, email } = req.body;
 
-  const stringPassword = JSON.stringify(password);
-  const hashedPassword = await bcrypt.hash(stringPassword, 10);
+  // const stringPassword = JSON.stringify(password);
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-  pool.query('INSERT INTO users (username, password, first_name, last_name, email, address, telephone) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
-   [username, hashedPassword, first_name, last_name, email, address, telephone], (error, results) => {
+  pool.query('INSERT INTO users (username, password, email) VALUES ($1, $2, $3) RETURNING *',
+   [username, hashedPassword, email], (error, results) => {
     if (error) {
       throw error
     }
-    res.status(200).redirect("/login");
+    res.status(200).json(results.rows[0]);
   })
 };
 

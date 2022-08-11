@@ -44,6 +44,33 @@ export const login = async(username, password) => {
 
 }
 
+export const register = async(username, password, email) => {
+
+  try {
+    const response = await axios.post(
+      `${API_ENDPOINT}/register`,
+      JSON.stringify({ 
+        "username": username,
+        "password": password,
+        "email": email
+      }),
+      {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+        mode: 'cors'
+      });
+  
+      const data = JSON.stringify(response.data);
+      
+      window.location.replace("https://localhost:3000/login");
+      return window.alert("Creation Sucessfull");
+    }
+    catch (error) {
+      window.alert("Could not create your profile");
+    }
+
+}
+
 export const logout = async() => {
 
    try {

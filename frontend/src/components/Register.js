@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SideBar from "./SideBar";
 import LogoBar from "./LogoBar";
 import { Link } from "react-router-dom";
+import { register } from "../api/users";
 
 export const Register = () => {
 
@@ -63,6 +64,7 @@ export const Register = () => {
             <div className="flex items-center justify-between">
             <button className="bg-slate-700 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
             type="button"
+            onClick={() => register(formState.username, formState.password, formState.email)}
             >
              Create Your Account
             </button>

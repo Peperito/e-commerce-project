@@ -8,9 +8,21 @@ import axios from "axios";
 export default function Profile() {
 
   const [username, setUsername] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastname] = useState("");
+  const [firstName, setFirstName] = useState("Please Add here");
+  const [lastName, setLastname] = useState("Please Add here");
   const [email, setEmail] = useState("");
+  const [telephone, setTelephone] = useState("Please Add here");
+  const [address, setAddress] = useState("Please Add here");
+
+  const [formState, setFormState] = useState({}); 
+	
+  const handleChange = ({ target }) => {
+   const { name, value } = target;
+   setFormState((prev) => ({
+     ...prev,
+     [name]: value
+   }));
+  };
 
   useEffect(() => {
     
@@ -29,6 +41,8 @@ export default function Profile() {
     setFirstName(parsedData.first_name);
     setLastname(parsedData.last_name);
     setEmail(parsedData.email);
+    setTelephone(parsedData.email);
+    setAddress(parsedData.email);
   })
   .catch(function (err) {
     // handle error
@@ -43,11 +57,15 @@ export default function Profile() {
       <SideBar />
       <LogoBar />
       <div>
-        <div className="text-center font-bold">
-            <h2 className="pt-36">Username: {username}</h2>
+        <div className="md:flex md:w-screen md:h-screen md:items-center pb-56 md:justify-center bg-gradient-to-r from-slate-400 to-slate-100">
+          <form>
+            <h2 className="pt-12">Username: {username}</h2>
             <h2 className="pt-12">first name: {firstName}</h2>
             <h2 className="pt-12" >last Name: {lastName}</h2>
             <h2 className="pt-12" >email: {email}</h2>
+            <h2 className="pt-12">telephone: {telephone}</h2>
+            <h2 className="pt-12">address: {address}</h2>
+          </form>
         </div>
       </div>
     </main>
