@@ -48,11 +48,12 @@ const getUserById = (req, res) => {
   const id = parseInt(req.params.id);
   
   if (req.session.userid == id){
-    pool.query('SELECT username, first_name, last_name, email, telephone, address FROM users WHERE id = $1', [id], (error, results) => {
+    pool.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
       if (error) {
         throw error
       }
-      res.status(200).json(results.rows[0]);
+      const data = JSON.stringify(results.rows[0]);
+      res.status(200).json(JSON.parse(data));
     })
   }
   else {
@@ -108,11 +109,11 @@ const loginUser = async (req, res) => {
 
 const updateUser = (req, res) => {
   const id = parseInt(req.params.id)
-  const { first_name, last_name, email } = req.body
+  const { username, email, first_name, last_name, address, telephone } = req.body
 
   pool.query(
-    'UPDATE users SET first_name = $1, last_name = $2, email = $3 WHERE id = $4',
-    [first_name, last_name, email, id],
+    'UPDATE users SET username = $1, email = $2, first_name = $3, last_name = $4, address = $5, telephone=$6 WHERE id = $7',
+    [username, email, first_name, last_name, address, telephone, id],
     (error, results) => {
       if (error) {
         throw error

@@ -8,7 +8,7 @@ export const WelcomePage = () => {
         <main>
             <SideBar />
             <LogoBar />
-            <body className="flex w-screen h-screen justify-end items-end overflow-auto bg-gradient-to-r from-slate-400 to-slate-100" >
+            <div className="flex w-screen h-screen justify-end items-end overflow-auto bg-gradient-to-r from-slate-400 to-slate-100" >
                 <div className="grid grid-cols-6 gap-4 justify-items-stretch w-screen h-screen" >
 
                     <div className="col-span-6 justify-self-stretch pt-24 pb-60 bg-hero-pattern">
@@ -19,7 +19,7 @@ export const WelcomePage = () => {
 
 
                     <div className="col-span-3 justify-self-end mt-6"><img className="w-32 h-32" src="./chrono.png" alt="chrono" /></div>
-                    <div className="col-span-3 justify-self-start mt-6"> <img className="w-64 h-32" src="./veryfast.png"/> </div>
+                    <div className="col-span-3 justify-self-start mt-6"> <img className="w-64 h-32" src="./veryfast.png" alt="fast"/> </div>
 
 
                     <div></div>
@@ -32,7 +32,7 @@ export const WelcomePage = () => {
 
 
                 </div>
-            </body>
+            </div>
         </main>
     )
 }

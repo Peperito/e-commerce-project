@@ -63,7 +63,8 @@ export const register = async(username, password, email) => {
       const data = JSON.stringify(response.data);
       
       window.location.replace("https://localhost:3000/login");
-      return window.alert("Creation Sucessfull");
+      window.alert("Creation Sucessfull");
+      return data;
     }
     catch (error) {
       window.alert("Could not create your profile");
@@ -88,5 +89,38 @@ export const logout = async() => {
   } catch (error) {
     window.alert(error);
   }
+
+}
+
+export const updateUser = async(username, email, firstname, lastname, address, telephone) => {
+
+  const id = localStorage.getItem("userid")
+
+  try {
+    const response = await axios.put(
+      `${API_ENDPOINT}/users/${id}`,
+      JSON.stringify({ 
+        "username": username,
+        "email": email,
+        "first_name": firstname,
+        "last_name": lastname,
+        "address": address,
+        "telephone": telephone
+      }),
+      {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+        mode: 'cors'
+      });
+  
+      const data = JSON.stringify(response.data);
+
+      window.alert("Update Sucessfull");
+      window.location.replace("https://localhost:3000/profile");
+      return data;
+    }
+    catch (error) {
+      window.alert("Could not update your profile");
+    }
 
 }
