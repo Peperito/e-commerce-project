@@ -36,7 +36,13 @@ Done: Welcome Page, Login/LogOut
 
 This is the current homepage:
 
-![image](https://user-images.githubusercontent.com/32515747/184133967-99adbdbb-7020-4d52-8f9e-50d175586dfc.png)
+#### For Desktop:
+
+![image](https://user-images.githubusercontent.com/32515747/184383824-6cbaba44-72e3-471e-af40-6c272022b00c.png)
+
+#### For Mobile:
+
+![image](https://user-images.githubusercontent.com/32515747/184384425-5a82b15d-35d8-467f-bad3-3426bfb57469.png)
 
 
 To continue: Profile Page, Account Creation
