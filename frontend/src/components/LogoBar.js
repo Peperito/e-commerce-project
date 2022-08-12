@@ -6,7 +6,7 @@ const LogoBar = () => {
 
     return ( 
         <div className ="fixed top-0  h-24 w-screen bg-slate-800 text-orange-300 shadow-lg z-20">
-            <h1 className="z-40 font-oswald text-center pt-6 text-3xl md:text-4xl drop-shadow-lg"> <Link to="/">Shopifast </Link></h1>
+            <h1 className="z-40 font-oswald text-center pt-6 text-2xl md:text-4xl drop-shadow-lg"> <Link to="/">Shopifast </Link></h1>
             <CreateOrDisplay />
             <LogoBarIcon icon={ < BsCart size="44" />} />
             <LogoMenuIcon icon={ < BsMenuDown size="44" />} />

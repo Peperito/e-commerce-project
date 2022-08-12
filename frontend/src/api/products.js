@@ -1,12 +1,12 @@
 import { API_ENDPOINT } from ".";
 import axios from "axios";
 
-export const getUsers = async () => {
-    
-    const response = await axios.get(`${API_ENDPOINT}/users`);
+export const getUsers = async (category) => {
 
-    const users = await response.json();
-  
-    return users;
+    const response = await axios.get(`${API_ENDPOINT}/products/${category}`)
+
+    const products = await response.json();
+    return products;
+    
   };
   

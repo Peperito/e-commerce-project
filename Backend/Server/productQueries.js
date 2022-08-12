@@ -37,7 +37,7 @@ const getProductsByCategory= async (req, res) => {
     };
   
     // get data fom DB and add to redis for 1hour
-    pool.query('SELECT name, description, category, price FROM product ORDER BY name ASC', async (error, results) => {
+    pool.query('SELECT name, description, category, price FROM product WHERE category = $1 ORDER BY name ASC', [category], async (error, results) => {
       if (error) {
         throw error
       }
