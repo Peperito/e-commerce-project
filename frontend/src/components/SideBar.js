@@ -28,7 +28,7 @@ const SideBar = () => {
 
 
     return (
-    <div className="fixed top-0 left-0 h-screen w-28 bg-slate-800 shadow-lg overflow-y-auto z-10">
+    <div className="fixed top-0 left-0 h-screen w-28 bg-slate-800 shadow-lg overflow-y-auto z-10 invisible lg:visible">
         <Link to={value}><SideBarIconProfile icon={ < BsPersonCircle size="44" />} tooltipText="Access your account here" /></Link>
         <SideBarIcon icon={ < FaCarAlt size="44" />} />
         <SideBarIcon icon={ < GiSailboat size="44" />} />

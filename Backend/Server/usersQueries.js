@@ -21,29 +21,6 @@ const pool = new Pool({
 });
 
 
-const getUsers = async (req, res) => {
-
-  //Connect to Redis if not already done
-  if (!redisClient.isOpen) await redisClient.connect();
-
-  // check if data already in cache
-  const users = await redisClient.get('users');
-  if (users != null) {
-    return res.status(200).json(JSON.parse(users));
-  };
-
-  // get data fom DB and add to redis for 1hour
-  pool.query('SELECT first_name, last_name, created_at, modified_at FROM users ORDER BY id ASC', async (error, results) => {
-    if (error) {
-      throw error
-    }
-    redisClient.setEx("users", DEFAULT_EXPIRATION, JSON.stringify(results.rows));
-    res.status(200).json(results.rows); 
-   });
-};
-
-
-
 const getUserById = (req, res) => {
   const id = parseInt(req.params.id);
   
@@ -135,4 +112,4 @@ const deleteUser = (req, res) => {
 }
 
 
-module.exports = {getUsers, getUserById, createUser, updateUser, deleteUser, loginUser};
+module.exports = { getUserById, createUser, updateUser, deleteUser, loginUser};

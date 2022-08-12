@@ -6,14 +6,6 @@ export default axios.create({
   withCredentials: true
 });
 
-export const getUsers = async () => {
-  const response = await fetch(`${API_ENDPOINT}/users`);
-  const users = await response.json();
-
-  return users;
-};
-
-
 export const login = async(username, password) => {
 
   try {
