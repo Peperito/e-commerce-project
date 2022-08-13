@@ -3,6 +3,7 @@ import WelcomePage from './routes/WelcomePage';
 import Profile from "./routes/Profile";
 import Login from './components/Login';
 import Register from './components/Register';
+import Cars from './routes/Cars';
 import {
   BrowserRouter,
   Routes,
@@ -21,6 +22,7 @@ function App() {
         <Route path="profile" element={<Profile />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="cars" element={<Cars />} />
       </Routes>
     </QueryClientProvider>
     </BrowserRouter>

@@ -20,7 +20,7 @@ export const Register = () => {
     <main>
         <SideBar />
         <LogoBar/>
-        <div className="md:flex md:w-screen md:h-screen md:items-center pb-56 md:justify-center bg-gradient-to-r from-slate-400 to-slate-100">
+        <div className="md:flex md:w-screen md:h-screen md:items-center md:justify-center bg-gradient-to-r from-slate-400 to-slate-100">
         <form className="bg-white shadow-md rounded px-8 pt-6 pb-8" >
             <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">

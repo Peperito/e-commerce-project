@@ -28,12 +28,12 @@ const SideBar = () => {
 
 
     return (
-    <div className="fixed top-0 left-0 h-screen w-28 bg-slate-800 shadow-lg overflow-y-auto z-10 invisible lg:visible">
-        <Link to={value}><SideBarIconProfile icon={ < BsPersonCircle size="44" />} tooltipText="Access your account here" /></Link>
-        <SideBarIcon icon={ < FaCarAlt size="44" />} />
-        <SideBarIcon icon={ < GiSailboat size="44" />} />
-        <SideBarIcon icon={ < FaPlane size="44" />} />
-        <div onClick={handleLogout} ><SideBarIconBottom  icon={ < BsBoxArrowRight size="44" />} tooltipText="Exit your account here" /></div>
+    <div className="fixed top-0 left-0 h-screen w-24 bg-slate-800 shadow-lg z-10 invisible lg:visible overflow-auto">
+        <Link to={value}><div className="sidebar-icon mb-12"> <SideBarIcon icon={ < BsPersonCircle size="44" />} /> </div> </Link> 
+        <Link to="/cars"> <div className="sidebar-icon mb-4"><SideBarIcon icon={ < FaCarAlt size="44" />} /> </div> </Link>
+        <div className="sidebar-icon mb-4"><SideBarIcon icon={ < GiSailboat size="44" />} /></div>
+        <div className="sidebar-icon mb-4"><SideBarIcon icon={ < FaPlane size="44" />} /></div>
+        <div className="sidebar-icon mt-12" onClick={handleLogout}> <SideBarIcon className="mt-12" icon={ < BsBoxArrowRight size="44" />} /> </div>
     </div>
     )
 }
@@ -41,26 +41,9 @@ const SideBar = () => {
 const SideBarIcon = ({ icon }) => {
 
     return (
-    <div className = "sidebar-icon group" >
+    <div>
         {icon}
     </div>
 )};
-
-const SideBarIconBottom = ({ icon }) => {
-
-    return (
-    <div className="sidebar-logout group" >
-        {icon}
-    </div>
-)};
-
-const SideBarIconProfile= ({ icon }) => {
-
-    return (
-    <div className="sidebar-profile group" >
-        {icon}
-    </div>
-)};
-
 
 export default SideBar;

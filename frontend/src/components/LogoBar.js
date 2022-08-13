@@ -35,12 +35,12 @@ const CreateOrDisplay = () => {
 
     if(!user){
         return (
-            <Link to="/register"><h2 className="fixed z-30 invisible md:visible font-oswald md:text-2xl underline hover:text-slate-600 pl-2 left-8 top-8">Create your account</h2></Link>
+            <Link to="/register"><h2 className="fixed z-30 invisible lg:visible font-oswald md:text-2xl underline hover:text-slate-600 pl-2 left-8 top-8">Create your account</h2></Link>
         )
     }
     else {
         return (
-            <h2 className="fixed z-30 invisible md:visible font-oswald md:text-2xl pl-2 left-8 top-8"> {user} </h2>
+            <h2 className="fixed z-30 invisible lg:visible font-oswald md:text-2xl pl-2 left-8 top-8"> {user} </h2>
         )
     }
 
