@@ -23,29 +23,31 @@ const pool = new Pool({
   });
 
 
-const getProductsByCategory= async (req, res) => {
+const getCars= async (req, res) => {
 
-    const category = String(req.params.category);
+    const page = parseInt(req.params.page);
+    const start = 1
+    const stop = 9
 
     //Connect to Redis if not already done
     if (!redisClient.isOpen) await redisClient.connect();
   
     // check if data already in cache
-    const products = await redisClient.get(category);
-    if (products != null) {
-      return res.status(200).json(JSON.parse(products));
+    const cars = await redisClient.get("cars");
+    if (cars != null) {
+      return res.status(200).json(cars);
     };
   
     // get data fom DB and add to redis for 1hour
-    pool.query('SELECT name, description, category, price FROM product WHERE category = $1 ORDER BY name ASC', [category], async (error, results) => {
+    pool.query('SELECT name, description, price FROM product WHERE category = "car" ORDER BY name ASC LIMIT $1,$2', [start, stop], async (error, results) => {
       if (error) {
         throw error
       }
-      redisClient.setEx(category, DEFAULT_EXPIRATION, JSON.stringify(results.rows));
+      redisClient.setEx(cars, DEFAULT_EXPIRATION, JSON.stringify(results.rows));
       res.status(200).json(results.rows); 
      });
   };
   
   
-  module.exports = { getProductsByCategory }; 
+  module.exports = { getCars }; 
 

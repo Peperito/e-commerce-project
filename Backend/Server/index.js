@@ -3,6 +3,7 @@ const router = express.Router();
 const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 3001;
 const dbUsers = require('./usersQueries');
+const dbProduct = require('./productQueries');
 var fs = require("fs");
 var https = require("https");
 require('dotenv').config();
@@ -100,5 +101,7 @@ app.delete('/logout', (req, res) => {
     });
   } 
 });
+
+app.get('/cars/:page', dbProduct.getCars);
 
 module.exports = router;

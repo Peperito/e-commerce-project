@@ -55,5 +55,12 @@ export default [
         imageAlt: "punto"
 
     },
+    {
+        model: "Fiat Punto 9",
+        price: 4000,
+        imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Fiat_Punto_II_front_20100509.jpg/1200px-Fiat_Punto_II_front_20100509.jpg",
+        imageAlt: "punto"
+
+    },
 
 ]
