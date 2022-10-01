@@ -6,9 +6,6 @@ const Redis = require("redis");
 const redisClient = Redis.createClient();
 const DEFAULT_EXPIRATION = 3600;
 
-
-const router = require("express").Router();
-
 redisClient.on('connect', function(){
   console.log("Redis Connected!");
 });
@@ -26,8 +23,13 @@ const pool = new Pool({
 const getCars= async (req, res) => {
 
     const page = parseInt(req.params.page);
-    const start = 1
-    const stop = 9
+    let start = 1
+    let stop = 9
+
+    if(page > 1){
+      start  = (page * 9 )- 9
+      stop = page * 9 
+    }
 
     //Connect to Redis if not already done
     if (!redisClient.isOpen) await redisClient.connect();
@@ -35,7 +37,7 @@ const getCars= async (req, res) => {
     // check if data already in cache
     const cars = await redisClient.get("cars");
     if (cars != null) {
-      return res.status(200).json(cars);
+      return res.status(200).json(JSON.parse(cars));
     };
   
     // get data fom DB and add to redis for 1hour
@@ -43,7 +45,7 @@ const getCars= async (req, res) => {
       if (error) {
         throw error
       }
-      redisClient.setEx(cars, DEFAULT_EXPIRATION, JSON.stringify(results.rows));
+      redisClient.setEx("cars", DEFAULT_EXPIRATION, JSON.stringify(results.rows));
       res.status(200).json(results.rows); 
      });
   };

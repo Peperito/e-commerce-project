@@ -68,8 +68,6 @@ app.use(
 );
 
 
-app.get('/users', dbUsers.getUsers);
-
 app.get('/users/:id', ensureAuthentication, dbUsers.getUserById);
 
 app.post('/register', dbUsers.createUser);
